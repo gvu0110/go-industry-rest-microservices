@@ -1,16 +1,16 @@
 package controllers
 
 import (
-	"encoding/json"
 	"go-industry-rest-microservices/mvc/services"
 	"go-industry-rest-microservices/mvc/utils"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
-func GetUser(w http.ResponseWriter, r *http.Request) {
-	userIdParam := r.URL.Query().Get("userId")
-	userId, err := strconv.ParseInt(userIdParam, 10, 64)
+func GetUser(c *gin.Context) {
+	userId, err := strconv.ParseInt(c.Param("userId"), 10, 64)
 	if err != nil {
 		// Just return the Bad Request to the client
 		apiErr := &utils.ApplicationError{
@@ -18,19 +18,15 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 			StatusCode: http.StatusBadRequest,
 			Code:       "bad_request",
 		}
-		jsonValue, _ := json.Marshal(apiErr)
-		w.WriteHeader(apiErr.StatusCode)
-		w.Write(jsonValue)
+		c.JSON(apiErr.StatusCode, apiErr)
 		return
 	}
 
 	user, apiErr := services.UserService.GetUser(userId)
 	if apiErr != nil {
-		w.WriteHeader(apiErr.StatusCode)
-		w.Write([]byte(apiErr.Message))
+		c.JSON(apiErr.StatusCode, apiErr)
 		return
 	}
 
-	jsonValue, _ := json.Marshal(user)
-	w.Write(jsonValue)
+	c.JSON(http.StatusOK, user)
 }
