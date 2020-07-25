@@ -12,13 +12,14 @@ import (
 const (
 	headerAuthorization       = "Authorization"
 	headerAuthorizationFormat = "token %s"
-	urlCreateaRepo            = "https://api.github.com/users/repos"
+	urlCreateaRepo            = "https://api.github.com/user/repos"
 )
 
 func getAuthorizationHeader(token string) string {
 	return fmt.Sprintf(headerAuthorizationFormat, token)
 }
 
+// CreateRepo function
 func CreateRepo(token string, request github.CreateRepoRequest) (*github.CreateRepoResponse, *github.GitHubErrorResponse) {
 	headers := http.Header{}
 	headers.Set(headerAuthorization, getAuthorizationHeader(token))

@@ -21,7 +21,7 @@ func TestMain(m *testing.M) {
 func TestConstants(t *testing.T) {
 	assert.EqualValues(t, "Authorization", headerAuthorization)
 	assert.EqualValues(t, "token %s", headerAuthorizationFormat)
-	assert.EqualValues(t, "https://api.github.com/users/repos", urlCreateaRepo)
+	assert.EqualValues(t, "https://api.github.com/user/repos", urlCreateaRepo)
 }
 
 func TestGetAuthorizationHeader(t *testing.T) {
@@ -32,7 +32,7 @@ func TestGetAuthorizationHeader(t *testing.T) {
 func TestCreateRepoErrorRestclient(t *testing.T) {
 	restclient.FlushMockups()
 	restclient.AddMockups(restclient.Mock{
-		URL:        "https://api.github.com/users/repos",
+		URL:        "https://api.github.com/user/repos",
 		HTTPMethod: http.MethodPost,
 		Err:        errors.New("Invalid restclient response"),
 	})
@@ -47,7 +47,7 @@ func TestCreateRepoInvalidResponseBody(t *testing.T) {
 	restclient.FlushMockups()
 	invalidCloser, _ := os.Open("-asaf3")
 	restclient.AddMockups(restclient.Mock{
-		URL:        "https://api.github.com/users/repos",
+		URL:        "https://api.github.com/user/repos",
 		HTTPMethod: http.MethodPost,
 		Response: &http.Response{
 			StatusCode: http.StatusCreated,
@@ -64,7 +64,7 @@ func TestCreateRepoInvalidResponseBody(t *testing.T) {
 func TestCreateRepoInvalidErrorInterface(t *testing.T) {
 	restclient.FlushMockups()
 	restclient.AddMockups(restclient.Mock{
-		URL:        "https://api.github.com/users/repos",
+		URL:        "https://api.github.com/user/repos",
 		HTTPMethod: http.MethodPost,
 		Response: &http.Response{
 			StatusCode: http.StatusUnauthorized,
@@ -81,7 +81,7 @@ func TestCreateRepoInvalidErrorInterface(t *testing.T) {
 func TestCreateRepoUnauthorized(t *testing.T) {
 	restclient.FlushMockups()
 	restclient.AddMockups(restclient.Mock{
-		URL:        "https://api.github.com/users/repos",
+		URL:        "https://api.github.com/user/repos",
 		HTTPMethod: http.MethodPost,
 		Response: &http.Response{
 			StatusCode: http.StatusUnauthorized,
@@ -98,7 +98,7 @@ func TestCreateRepoUnauthorized(t *testing.T) {
 func TestCreateRepoInvalidSuccessResponse(t *testing.T) {
 	restclient.FlushMockups()
 	restclient.AddMockups(restclient.Mock{
-		URL:        "https://api.github.com/users/repos",
+		URL:        "https://api.github.com/user/repos",
 		HTTPMethod: http.MethodPost,
 		Response: &http.Response{
 			StatusCode: http.StatusCreated,
@@ -115,7 +115,7 @@ func TestCreateRepoInvalidSuccessResponse(t *testing.T) {
 func TestCreateRepoNoError(t *testing.T) {
 	restclient.FlushMockups()
 	restclient.AddMockups(restclient.Mock{
-		URL:        "https://api.github.com/users/repos",
+		URL:        "https://api.github.com/user/repos",
 		HTTPMethod: http.MethodPost,
 		Response: &http.Response{
 			StatusCode: http.StatusCreated,
