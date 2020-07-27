@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 var (
@@ -16,8 +18,14 @@ var (
 type Mock struct {
 	URL        string
 	HTTPMethod string
+	BodyText   string
 	Response   *http.Response
 	Err        error
+}
+
+func (m *Mock) GetResponse() *http.Response {
+	m.Response.Body = ioutil.NopCloser(strings.NewReader(m.BodyText))
+	return m.Response
 }
 
 func getMockID(HTTPMethod, URL string) string {
@@ -45,6 +53,9 @@ func Post(URL string, body interface{}, headers http.Header) (*http.Response, er
 		mock := mocks[getMockID(http.MethodPost, URL)]
 		if mock == nil {
 			return nil, errors.New("No mockup found for given request")
+		}
+		if mock.BodyText != "" {
+			return mock.GetResponse(), mock.Err
 		}
 		return mock.Response, mock.Err
 	}

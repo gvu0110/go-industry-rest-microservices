@@ -25,10 +25,10 @@ func TestMain(m *testing.M) {
 func TestCreateRepoInvalidJSONBody(t *testing.T) {
 	// response := httptest.NewRecorder()
 	// c, _ := gin.CreateTestContext(response)
-	// request, _ := http.NewRequest(http.MethodPost, "/repositories", strings.NewReader(``))
+	// request, _ := http.NewRequest(http.MethodPost, "/repository", strings.NewReader(``))
 	// c.Request = request
 
-	request, _ := http.NewRequest(http.MethodPost, "/repositories", strings.NewReader(``))
+	request, _ := http.NewRequest(http.MethodPost, "/repository", strings.NewReader(``))
 	response := httptest.NewRecorder()
 	c := test_utils.GetMockedContext(request, response)
 
@@ -46,10 +46,10 @@ func TestCreateRepoInvalidJSONBody(t *testing.T) {
 func TestCreateRepoErrorFromGithub(t *testing.T) {
 	// response := httptest.NewRecorder()
 	// c, _ := gin.CreateTestContext(response)
-	// request, _ := http.NewRequest(http.MethodPost, "/repositories", strings.NewReader(`{"name": "testing"}`))
+	// request, _ := http.NewRequest(http.MethodPost, "/repository", strings.NewReader(`{"name": "testing"}`))
 	// c.Request = request
 
-	request, _ := http.NewRequest(http.MethodPost, "/repositories", strings.NewReader(`{"name": "testing"}`))
+	request, _ := http.NewRequest(http.MethodPost, "/repository", strings.NewReader(`{"name": "testing"}`))
 	response := httptest.NewRecorder()
 	c := test_utils.GetMockedContext(request, response)
 
@@ -78,10 +78,10 @@ func TestCreateRepoErrorFromGithub(t *testing.T) {
 func TestCreateRepoNoError(t *testing.T) {
 	// response := httptest.NewRecorder()
 	// c, _ := gin.CreateTestContext(response)
-	// request, _ := http.NewRequest(http.MethodPost, "/repositories", strings.NewReader(`{"name": "testing"}`))
+	// request, _ := http.NewRequest(http.MethodPost, "/repository", strings.NewReader(`{"name": "testing"}`))
 	// c.Request = request
 
-	request, _ := http.NewRequest(http.MethodPost, "/repositories", strings.NewReader(`{"name": "testing"}`))
+	request, _ := http.NewRequest(http.MethodPost, "/repository", strings.NewReader(`{"name": "testing"}`))
 	response := httptest.NewRecorder()
 	c := test_utils.GetMockedContext(request, response)
 
